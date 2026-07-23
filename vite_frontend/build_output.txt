@@ -1,0 +1,19 @@
+
+> vite_frontend@0.0.0 build
+> tsc -b && vite build
+
+src/App.tsx(138,9): error TS6133: 'handleInjectDirective' is declared but its value is never read.
+src/components/Header.tsx(2,10): error TS6133: 'Zap' is declared but its value is never read.
+src/components/MeetingPrep.tsx(1,10): error TS6133: 'useEffect' is declared but its value is never read.
+src/components/MissionControl.tsx(4,54): error TS6133: 'Info' is declared but its value is never read.
+src/components/MissionControl.tsx(37,24): error TS6133: 'idx' is declared but its value is never read.
+src/components/OutputReady.tsx(2,44): error TS6133: 'ArrowRight' is declared but its value is never read.
+src/components/ProposalPreview.tsx(4,3): error TS6133: 'FileText' is declared but its value is never read.
+src/components/ReviewApprove.tsx(4,62): error TS6133: 'RefreshCw' is declared but its value is never read.
+src/components/ReviewApprove.tsx(4,107): error TS6133: 'X' is declared but its value is never read.
+src/components/ReviewApprove.tsx(172,3): error TS6133: 'onToggleMaximize' is declared but its value is never read.
+src/components/ReviewApprove.tsx(184,9): error TS6133: 'parseWinningCondition' is declared but its value is never read.
+src/components/ReviewApprove.tsx(654,7): error TS6133: 'Award' is declared but its value is never read.
+src/components/RoadmapToApproval.tsx(68,40): error TS7006: Parameter 'p' implicitly has an 'any' type.
+src/components/RoadmapToApproval.tsx(68,62): error TS7006: Parameter 'p' implicitly has an 'any' type.
+src/components/Timeline.tsx(20,7): error TS6133: 'RUNNING_PHASES' is declared but its value is never read.

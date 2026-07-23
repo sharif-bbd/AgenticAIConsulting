@@ -1,0 +1,70 @@
+:root {
+  /* ── Dark Premium Palette ─────────────────────────────────── */
+  /* Shifted to a "Soft Graphite" Light Mode */
+  --bg-app: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-card: #f8fafc;
+  --bg-card-hover: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  --bg-glass-hover: rgba(255, 255, 255, 0.85);
+  --bg-input: #ffffff;
+
+  /* Text */
+  /* Maximum contrast for main content, deeper slates for hierarchy */
+  --text-main: #020617;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+
+  /* Brand Electric Blue */
+  --brand: #2563eb;
+  --brand-bright: #1d4ed8;
+  --brand-glow: rgba(37, 99, 235, 0.15);
+  --brand-muted: rgba(37, 99, 235, 0.08);
+  --brand-border: rgba(37, 99, 235, 0.25);
+
+  /* Accent Cyan */
+  --accent: #0891b2;
+  --accent-muted: rgba(8, 145, 178, 0.1);
+
+  /* Success */
+  --success: #059669;
+  --success-muted: rgba(5, 150, 105, 0.1);
+
+  /* Warning / Process */
+  --warning: #d97706;
+  --warning-muted: rgba(217, 119, 6, 0.1);
+
+  /* Borders */
+  --border-dim: #e2e8f0;
+  --border-subtle: #cbd5e1;
+  --border-active: #94a3b8;
+  --border-brand: rgba(37, 99, 235, 0.4);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-premium:
+    0 0 0 1px rgba(15, 23, 42, 0.05),
+    0 10px 15px -3px rgba(15, 23, 42, 0.1),
+    0 4px 6px -4px rgba(15, 23, 42, 0.1);
+  --shadow-floating:
+    0 0 0 1px rgba(15, 23, 42, 0.08),
+    0 20px 25px -5px rgba(15, 23, 42, 0.1),
+    0 8px 10px -6px rgba(15, 23, 42, 0.1);
+  --shadow-brand:
+    0 4px 14px 0 rgba(37, 99, 235, 0.25);
+  --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.15);
+
+  /* Typography */
+  --font-main: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, monospace;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+
+  /* Spacing Unit */
+  --space-unit: 8px;
+}
