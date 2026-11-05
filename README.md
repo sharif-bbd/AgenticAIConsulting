@@ -1,6 +1,6 @@
 # Agentic Business Proposal Generator
 
-ETH Zurich Seminar Prototype · Marc Brandis Strategic Consulting
+
 
 A multi-agent AI system that transforms a fuzzy client brief into a polished, client-winning consulting proposal — a process that normally takes senior consultants 3 full days.
 
