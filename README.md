@@ -41,8 +41,8 @@ This section walks you through the full setup from a fresh Ubuntu machine. You w
 Open a terminal and clone the repository:
 
 ```bash
-git clone https://github.com/GravityBoi/AgenticBusinessProposal.git
-cd AgenticBusinessProposal
+git clone https://github.com/sharif-bbd/AgenticAIConsulting.git
+cd AgenticAIConsulting
 ```
 
 ---
