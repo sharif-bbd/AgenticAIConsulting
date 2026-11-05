@@ -1,7 +1,5 @@
 # Agentic Business Proposal Generator
 
-
-
 A multi-agent AI system that transforms a fuzzy client brief into a polished, client-winning consulting proposal — a process that normally takes senior consultants 3 full days.
 
 ---
@@ -19,10 +17,12 @@ Fuzzy Brief → [Agent 1: Research] → [Agent 2: Questions] → [HITL #1: Meet 
 |---|---|---|
 | Research Engine | Web-searches the client (company, industry, competitors) | Sonnet 4.6 |
 | Discovery Prep | Generates 10–12 probing questions for the first meeting | Sonnet 4.6 |
-| Empathy Drafter | Writes "Our Understanding of the Situation" | Sonnet 4.6 |
-| Framework Customizer | Selects/mutates consulting frameworks, defines deliverables + fees | Sonnet 4.6 |
-| Adversarial Reviewer | Critiques as a skeptical CFO/CEO (scores urgency/empathy/clarity/differentiation) | Opus 4.6 |
+| Empathy Drafter | Writes "Our Understanding of the Situation" | Opus 4.7 |
+| Framework Customizer | Selects/mutates consulting frameworks, defines deliverables + fees | Opus 4.7 |
+| Adversarial Reviewer | Critiques as a skeptical CFO/CEO (scores urgency/empathy/clarity/differentiation) | Opus 4.7 |
 | Output Engine | Polishes and renders final PDF + Markdown | Sonnet 4.6 |
+
+Models can be overridden with `SONNET_MODEL` and `OPUS_MODEL` in `.env`.
 
 **2 Human-in-the-Loop Checkpoints:**
 - **HITL #1:** After questions are generated — consultant reviews questions, conducts client meeting, submits transcript
@@ -33,6 +33,15 @@ Fuzzy Brief → [Agent 1: Research] → [Agent 2: Questions] → [HITL #1: Meet 
 ## Setup — Step-by-Step (Ubuntu 24)
 
 This section walks you through the full setup from a fresh Ubuntu machine. You will need two terminal windows open at the end — one for the backend, one for the frontend.
+
+**Prerequisites:** Python 3.11 or 3.12, Node.js 20.19+ (or 22.12+), and Git.
+
+> Ubuntu 24's default `apt install nodejs` ships Node 18, which is too old for the frontend (Vite 8). Install a newer version with [nvm](https://github.com/nvm-sh/nvm):
+> ```bash
+> curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+> source ~/.bashrc
+> nvm install 22
+> ```
 
 ---
 
@@ -49,7 +58,7 @@ cd AgenticAIConsulting
 
 ### Step 2 — Set up a Python environment
 
-The project requires Python 3.11 or 3.12. Create and activate a virtual environment so packages don't pollute your system Python:
+Create and activate a virtual environment so packages don't pollute your system Python:
 
 ```bash
 python3 -m venv .venv
@@ -72,14 +81,13 @@ sudo apt install libpango-1.0-0 libpangoft2-1.0-0
 
 ### Step 3 — Get your two API keys
 
-You need two keys. Both have free tiers that are more than enough for testing.
-
-**Anthropic (Claude) API key** — this powers all 6 agents.
+**Anthropic (Claude) API key** — this powers all 6 agents. The API is pay-as-you-go, so you need to add a small amount of credit to your account before the key works.
 1. Go to [console.anthropic.com](https://console.anthropic.com) and create an account
-2. Go to **API Keys** in the left sidebar → click **Create Key**
-3. Copy the key (it starts with `sk-ant-...`)
+2. Add credit under **Billing**
+3. Go to **API Keys** in the left sidebar → click **Create Key**
+4. Copy the key (it starts with `sk-ant-...`)
 
-**Tavily API key** — this powers the web search in Agent 1 (company/industry research).
+**Tavily API key** — this powers the web search in Agent 1 (company/industry research). The free tier is enough for testing.
 1. Go to [app.tavily.com](https://app.tavily.com) and create an account
 2. Your API key is shown on the dashboard home page immediately after signup
 3. Copy the key (it starts with `tvly-...`)
@@ -94,12 +102,14 @@ Copy the example config and fill in your two keys:
 cp .env.example .env
 ```
 
-Open `.env` in any text editor and replace the placeholders:
+Open `.env` in any text editor and replace the two placeholder values:
 
 ```
-ANTHROPIC_API_KEY=sk-ant-your-key-here
-TAVILY_API_KEY=tvly-your-key-here
+ANTHROPIC_API_KEY=your_anthropic_api_key_here   →   ANTHROPIC_API_KEY=sk-ant-...
+TAVILY_API_KEY=your_tavily_api_key_here         →   TAVILY_API_KEY=tvly-...
 ```
+
+The `SONNET_MODEL` and `OPUS_MODEL` lines are optional — leave them as they are unless you want to use different models.
 
 Save and close the file.
 
@@ -107,13 +117,13 @@ Save and close the file.
 
 ### Step 5 — Initialize the knowledge base (run once)
 
-This builds the local vector database of consulting frameworks (Porter's Five Forces, SWOT, Issue Trees, MECE, etc.) that Agent 4 draws on when designing methodologies. You only need to run this once:
+This builds the local vector database of consulting frameworks (Porter's Five Forces, SWOT, PESTLE, Issue Trees, Minto Pyramid, Hypothesis-Driven Problem Solving, 7Ps) that Agent 4 draws on when designing methodologies. You only need to run this once:
 
 ```bash
 python -m backend.knowledge_base.init_vectorstore
 ```
 
-You should see it embedding and storing several documents. Takes about 30 seconds.
+You should see it embedding and storing several documents. Takes about 30 seconds (longer on the first run, while the embedding model downloads).
 
 ---
 
@@ -143,11 +153,12 @@ This downloads the Node.js packages for the React frontend. Takes about 1 minute
 
 ### Step 8 — Start the system (two terminals)
 
-You need **two terminal windows open at the same time**. In both, make sure you are in the project root folder and have the virtual environment active (`source .venv/bin/activate`).
+You need **two terminal windows open at the same time**, both in the project root folder.
 
-**Terminal 1 — Backend:**
+**Terminal 1 — Backend** (with the virtual environment active):
 
 ```bash
+source .venv/bin/activate
 uvicorn backend.main:app --reload --port 8000
 ```
 
@@ -174,6 +185,8 @@ You should see the proposal generator UI. Start by pasting a client brief into t
 
 If you want to inspect the raw API: `http://localhost:8000/docs`
 
+**Alternative UI:** The repo also contains the original Streamlit prototype. With the backend running, start it with `streamlit run frontend/app.py` and open `http://localhost:8501`.
+
 ---
 
 ## Running Tests
@@ -186,7 +199,7 @@ pytest tests/ -v
 
 ## Workflow
 
-1. Paste the fuzzy client brief into the Streamlit UI
+1. Paste the fuzzy client brief into the UI
 2. Agent 1 researches the client; Agent 2 generates probing questions
 3. **[You]** Review questions → conduct client meeting → paste transcript
 4. Agents 3 & 4 draft Understanding + Methodology; Agent 5 critiques as skeptical executive (loops ≤3×)
@@ -207,10 +220,11 @@ backend/
   knowledge_base/        — Consulting frameworks (markdown) + ChromaDB vectorstore
   api/                   — FastAPI routes + Pydantic schemas
   main.py                — FastAPI app entry point
+vite_frontend/           — React + TypeScript UI (main frontend)
 frontend/
-  app.py                 — Streamlit dual-pane UI
+  app.py                 — Streamlit prototype UI (alternative frontend)
 tests/
   test_agents.py         — Unit tests per agent (mocked LLM calls)
   test_graph.py          — Graph topology + routing logic tests
-outputs/                 — Generated proposals (PDF + Markdown)
+outputs/                 — Generated proposals (PDF + Markdown), created at runtime
 ```
